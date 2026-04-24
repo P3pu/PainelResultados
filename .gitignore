@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv
+venv/
+ENV/
+
+# Flask/Dash
+instance/
+.webassets-cache
+
+# Dados e Uploads (IMPORTANTE)
+# Não queremos subir as planilhas dos usuários para o GitHub
+uploads/*
+!uploads/.gitkeep
+
+# Excel/CSV temporários
+*.xlsx
+*.csv
+*.xls
+
+# Sistema
+.DS_Store
+Thumbs.db
+
+# Ambiente local
+.env
