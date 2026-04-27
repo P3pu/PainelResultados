@@ -87,6 +87,9 @@ def upload_files():
         # Formatação para exibição amigável
         df_final['porcentagem'] = df_final['porcentagem'].round(2).astype(str) + '%'
 
+        # ✅ NOVO: Remove linhas onde classificacao_total é 99999999
+        df_final = df_final[df_final['classificacao_total'] != 99999999]
+
         # ✅ NOVO: Remove linhas onde 'celular' está vazio ou nulo
         df_final = df_final[df_final['celular'].notna() & (df_final['celular'].str.strip() != '')]
 
