@@ -87,6 +87,14 @@ def upload_files():
         # Formatação para exibição amigável
         df_final['porcentagem'] = df_final['porcentagem'].round(2).astype(str) + '%'
 
+        # ✅ NOVO: Remove linhas onde 'celular' está vazio ou nulo
+        df_final = df_final[df_final['celular'].notna() & (df_final['celular'].str.strip() != '')]
+
+        # ✅ NOVO: Ordena por porcentagem do maior para o menor
+        # Precisamos de uma coluna numérica temporária para ordenar (a formatada já tem '%')
+        df_final['_pct_num'] = df_final['porcentagem'].str.replace('%', '', regex=False).astype(float)
+        df_final = df_final.sort_values('_pct_num', ascending=False).drop(columns=['_pct_num'])
+
         # Salva na variável global para o download
         df_resultado_final = df_final.copy()
 
