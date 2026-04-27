@@ -90,6 +90,20 @@ def upload_files():
         # ✅ NOVO: Remove linhas onde classificacao_total é 99999999
         df_final = df_final[df_final['classificacao_total'] != 99999999]
 
+          # ✅ NOVO: Preencher Pelotão vazio baseado em porcentagem_baixa
+        df_final['Pelotão'] = df_final.apply(
+            lambda row: (
+                'Branco' if row['porcentagem_baixa'] == 'SIM' 
+                else 'Azul'
+            ) if pd.isna(row['Pelotão']) or row['Pelotão'] == '' 
+            else row['Pelotão'],
+            axis=1
+        )
+
+        # ✅ NOVO: Extrair cidade do Evento e preencher a coluna Cidade
+        # Estratégia: A cidade geralmente é a ÚLTIMA parte após os hífens
+        df_final['Cidade'] = df_final['Evento'].str.split(' - ').str[-1].str.strip()
+
         # ✅ NOVO: Remove linhas onde 'celular' está vazio ou nulo
         df_final = df_final[df_final['celular'].notna() & (df_final['celular'].str.strip() != '')]
 
